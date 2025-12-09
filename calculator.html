@@ -16,6 +16,34 @@
             --btn-dark: #0f3460;
             --btn-number: #1f4068;
             --btn-operator: #e94560;
+            --btn-number-hover: #2a5a8a;
+            --btn-function-hover: #1a4a6e;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --border-hover: rgba(255, 255, 255, 0.1);
+            --gradient-1: rgba(233, 69, 96, 0.15);
+            --gradient-2: rgba(15, 52, 96, 0.3);
+            --scrollbar-track: rgba(255, 255, 255, 0.05);
+        }
+
+        body.light-theme {
+            --bg-dark: #e8eef3;
+            --bg-card: #ffffff;
+            --accent: #e94560;
+            --accent-hover: #d63652;
+            --text: #1a1a2e;
+            --text-dim: #5a6a7a;
+            --btn-dark: #c5d5e5;
+            --btn-number: #d8e4ef;
+            --btn-operator: #e94560;
+            --btn-number-hover: #c5d5e5;
+            --btn-function-hover: #b5c5d5;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(0, 0, 0, 0.15);
+            --gradient-1: rgba(233, 69, 96, 0.08);
+            --gradient-2: rgba(15, 52, 96, 0.08);
+            --scrollbar-track: rgba(0, 0, 0, 0.05);
         }
 
         * {
@@ -31,9 +59,66 @@
             align-items: center;
             background: var(--bg-dark);
             background-image: 
-                radial-gradient(ellipse at top left, rgba(233, 69, 96, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(15, 52, 96, 0.3) 0%, transparent 50%);
+                radial-gradient(ellipse at top left, var(--gradient-1) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, var(--gradient-2) 0%, transparent 50%);
             font-family: 'JetBrains Mono', monospace;
+            transition: background 0.3s ease;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.05);
+            border-color: var(--accent);
+        }
+
+        .theme-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .theme-icon.sun {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        }
+
+        .theme-icon.moon {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+
+        .theme-icon.active {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        body.light-theme .theme-icon.sun {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.6);
+        }
+
+        body:not(.light-theme) .theme-icon.moon {
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
         }
 
         .app-container {
@@ -49,10 +134,11 @@
             padding: 20px;
             width: 280px;
             box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.05);
+                0 25px 50px -12px var(--shadow-color),
+                0 0 0 1px var(--border-color);
             display: flex;
             flex-direction: column;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         .history-header {
@@ -61,7 +147,7 @@
             align-items: center;
             margin-bottom: 16px;
             padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border-hover);
         }
 
         .history-title {
@@ -108,7 +194,7 @@
         }
 
         .history-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--scrollbar-track);
             border-radius: 3px;
         }
 
@@ -125,7 +211,7 @@
             background: var(--bg-dark);
             border-radius: 12px;
             padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
             cursor: pointer;
             transition: all 0.2s ease;
         }
@@ -169,8 +255,9 @@
             border-radius: 24px;
             padding: 24px;
             box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.05);
+                0 25px 50px -12px var(--shadow-color),
+                0 0 0 1px var(--border-color);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
         }
 
         @keyframes slideUp {
@@ -194,7 +281,8 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            transition: background 0.3s ease, border-color 0.3s ease;
         }
 
         .display .expression {
@@ -252,10 +340,11 @@
         .btn-number {
             background: var(--btn-number);
             color: var(--text);
+            transition: all 0.15s ease, background 0.3s ease;
         }
 
         .btn-number:hover {
-            background: #2a5a8a;
+            background: var(--btn-number-hover);
             transform: translateY(-2px);
         }
 
@@ -272,10 +361,11 @@
         .btn-function {
             background: var(--btn-dark);
             color: var(--accent);
+            transition: all 0.15s ease, background 0.3s ease;
         }
 
         .btn-function:hover {
-            background: #1a4a6e;
+            background: var(--btn-function-hover);
             transform: translateY(-2px);
         }
 
@@ -343,6 +433,10 @@
     </style>
 </head>
 <body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Переключить тему">
+        <span class="theme-icon moon">🌙</span>
+        <span class="theme-icon sun">☀️</span>
+    </button>
     <div class="app-container">
         <div class="history-panel">
             <div class="history-header">
@@ -392,10 +486,30 @@
         let operator = null;
         let shouldResetDisplay = false;
         let history = [];
+        let isDarkTheme = true;
 
         const expressionEl = document.getElementById('expression');
         const resultEl = document.getElementById('result');
         const historyListEl = document.getElementById('historyList');
+
+        // Загрузка сохранённой темы
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('calculator-theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                isDarkTheme = false;
+            }
+        }
+
+        // Переключение темы
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            document.body.classList.toggle('light-theme');
+            localStorage.setItem('calculator-theme', isDarkTheme ? 'dark' : 'light');
+        }
+
+        // Инициализация темы при загрузке
+        loadTheme();
 
         function updateDisplay() {
             resultEl.textContent = currentValue;
